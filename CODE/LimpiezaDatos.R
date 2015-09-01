@@ -141,3 +141,111 @@ indicadoresInternacionales <- indicadoresInternacionales[,c(2,4)]
 names(indicadoresInternacionales) <- c("petroleo", "produccionindustrial")
 indicadoresInternacionales$date <- seq(as.Date("1993/01/01"), as.Date("2015/06/01"), "month")
 rm(petroleo, produccionindustrial)
+
+
+## ./RAW/PIB
+path <- "./RAW/PIB"
+temp <- paste(path,list.files(path, pattern = ".csv"), sep = "/")
+myfiles <- sapply(temp, read.csv)
+data <- data.frame(matrix(unlist(myfiles), nrow = 100))[11:100,]
+cols <- seq(from = 2, to = length(data), by = 2)
+data <- data[,cols]
+
+names <- gsub(path, "", temp)
+names <- gsub("/", "", names)
+names <- gsub(".csv", "", names)
+names(data) <- tolower(names)
+
+data <- data.frame(sapply(data, function(x){x <- as.numeric(paste(x))}))
+
+data$date <- seq(as.Date("1993/01/01"), as.Date("2015/04/01"), "quarter")
+
+pib <- data
+
+## ./RAW/PIB/Oferta
+path <- "./RAW/PIB/Oferta"
+temp <- paste(path,list.files(path, pattern = ".csv"), sep = "/")
+myfiles <- sapply(temp, read.csv)
+data <- data.frame(matrix(unlist(myfiles), nrow = 99))[11:99,]
+cols <- seq(from = 2, to = length(data), by = 2)
+data <- data[,cols]
+
+names <- gsub(path, "", temp)
+names <- gsub("/", "", names)
+names <- gsub(".csv", "", names)
+names(data) <- tolower(names)
+
+data <- data.frame(sapply(data, function(x){x <- as.numeric(paste(x))}))
+
+data$date <- seq(as.Date("1993/01/01"), as.Date("2015/01/01"), "quarter")
+
+pibOferta <- data
+
+## ./RAW/PIB/Terciarias
+path <- "./RAW/PIB/Terciarias"
+temp <- paste(path,list.files(path, pattern = ".csv"), sep = "/")
+myfiles <- sapply(temp, read.csv)
+data <- data.frame(matrix(unlist(myfiles), nrow = 100))[11:100,]
+cols <- seq(from = 2, to = length(data), by = 2)
+data <- data[,cols]
+
+names <- gsub(path, "", temp)
+names <- gsub("/", "", names)
+names <- gsub(".csv", "", names)
+names(data) <- tolower(names)
+
+data <- data.frame(sapply(data, function(x){x <- as.numeric(paste(x))}))
+
+data$date <- seq(as.Date("1993/01/01"), as.Date("2015/04/01"), "quarter")
+
+pibTerciarias<- data
+
+
+# ./RAW/PreciosInflacion/CanastaBasica
+path <- "./RAW/PreciosInflacion/CanastaBasica"
+indice <- read.csv(paste(path, "Indice.csv", sep = "/"), sep = ",")[11:412,]
+inflacion <- read.csv(paste(path, "Inflacion.csv", sep = "/"), sep = ",")[10:411,]
+canastabasica <- data.frame(indice, inflacion)
+canastabasica <- canastabasica[,c(2,4)]
+names(canastabasica) <- c("indice", "inflacion")
+canastabasica$date <- seq(as.Date("1982/02/01"), as.Date("2015/07/01"), "month")
+rm(indice, inflacion)
+
+
+# ./RAW/PreciosInflacion/INPC/Indice
+path <- "./RAW/PreciosInflacion/INPC/Indice"
+temp <- paste(path,list.files(path, pattern = ".csv"), sep = "/")
+myfiles <- sapply(temp, read.csv)
+data <- data.frame(matrix(unlist(myfiles), nrow = 568))[10:568,]
+cols <- seq(from = 2, to = length(data), by = 2)
+data <- data[,cols]
+
+names <- gsub(path, "", temp)
+names <- gsub("/", "", names)
+names <- gsub(".csv", "", names)
+names(data) <- tolower(names)
+
+data <- data.frame(sapply(data, function(x){x <- as.numeric(paste(x))}))
+
+data$date <- seq(as.Date("1969/01/01"), as.Date("2015/07/01"), "month")
+
+inpcindice <- data
+
+# ./RAW/PreciosInflacion/INPC/Inflacion
+path <- "./RAW/PreciosInflacion/INPC/Inflacion"
+temp <- paste(path,list.files(path, pattern = ".csv"), sep = "/")
+myfiles <- sapply(temp, read.csv)
+data <- data.frame(matrix(unlist(myfiles), nrow = 567))[10:567,]
+cols <- seq(from = 2, to = length(data), by = 2)
+data <- data[,cols]
+
+names <- gsub(path, "", temp)
+names <- gsub("/", "", names)
+names <- gsub(".csv", "", names)
+names(data) <- tolower(names)
+
+data <- data.frame(sapply(data, function(x){x <- as.numeric(paste(x))}))
+
+data$date <- seq(as.Date("1969/02/01"), as.Date("2015/07/01"), "month")
+
+inpcinflacion <- data
